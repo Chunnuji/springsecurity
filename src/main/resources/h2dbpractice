@@ -1,0 +1,12 @@
+
+CREATE TABLE Persons (
+    PersonID int,
+    FirstName varchar(255),
+    City varchar(255)
+);
+
+insert into persons values(1,'Ram','Faridabad');
+insert into persons values(2,'Laksman','Gurugram');
+insert into persons values(3,'Sita','Delhi');
+
+select * from persons;

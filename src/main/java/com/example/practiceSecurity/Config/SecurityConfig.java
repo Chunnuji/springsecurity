@@ -17,20 +17,32 @@ public class SecurityConfig {
 
     // ✅ Public / Whitelisted Endpoints
     private static final String[] WHITELIST = {
-            "/hello2",
+//            "/hello2",
             "/auth/**",
             "/swagger-ui/**",
             "/v3/api-docs/**",
             "/swagger-ui.html",
             "/health",
-            "/actuator/**"
-    };
+            "/actuator/**",
+            "/h2-console",
+            "/h2-console/**"
+
+};
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                .csrf(csrf -> csrf.disable())
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/h2-console/**") // ⭐
+                )
+
+                .headers(headers -> headers
+                        .frameOptions(frame -> frame.disable()) // ⭐
+                )
+
+                .anonymous(anonymous -> anonymous.disable())  // ⭐ FIX
+
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(WHITELIST).permitAll()
