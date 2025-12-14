@@ -12,6 +12,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -41,24 +42,18 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                .csrf(csrf -> csrf
-                        .disable()
-//                        .ignoringRequestMatchers("/h2-console/**","/auth/signup") // ⭐
-                )
+                .csrf(csrf -> csrf.disable())
 
-                .headers(headers -> headers
-                        .frameOptions(frame -> frame.disable()) // ⭐
-                )
+                .sessionManagement(sessionconfig ->
+                        sessionconfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-//                .anonymous(anonymous -> anonymous.disable())  // ⭐ FIX
-
+                .headers(headers ->
+                        headers.frameOptions(frame -> frame.disable()))
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(WHITELIST).permitAll()
-                        .anyRequest().authenticated()
-                )
+                        .anyRequest().authenticated())
 
-                // ✅ ENABLE BASIC AUTH
                 .httpBasic(Customizer.withDefaults());
 
         return http.build();
