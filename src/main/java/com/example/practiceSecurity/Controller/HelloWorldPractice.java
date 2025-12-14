@@ -16,16 +16,5 @@ public class HelloWorldPractice {
         return "Hello World 2 !";
     }
 
-//    @PreAuthorize(value = "hasRole('dev')")
-//    @GetMapping("/userA")
-//    public String userAMethod(){
-//        return "Hello userA";
-//    }
-//
-//    @PreAuthorize(value = "hasRole('prod')")
-//    @GetMapping("/admin")
-//    public String myAdmin(){
-//        return "Hello admin";
-//    }
 
 }

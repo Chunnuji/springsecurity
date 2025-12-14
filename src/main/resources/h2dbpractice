@@ -10,3 +10,12 @@ insert into persons values(2,'Laksman','Gurugram');
 insert into persons values(3,'Sita','Delhi');
 
 select * from persons;
+
+
+///
+
+CREATE TABLE user1 (
+    ID int,
+    USERNAME varchar(255),
+    PASSWORD varchar(255)
+);
