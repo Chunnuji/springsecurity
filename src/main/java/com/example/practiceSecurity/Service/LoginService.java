@@ -9,8 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class LoginService {
@@ -29,8 +33,14 @@ public class LoginService {
     }
 
     public void signUp(LoginRequest loginRequest){
+
+        Optional<User> user1 = userRepository.findByUsername(loginRequest.getUsername());
+        if (user1.isPresent()) {
+            throw new RuntimeException("Username already exists");
+        }
+
         String pass = passwordEncoder.encode(loginRequest.getPassword());
-        User user = new User(loginRequest.getUsername(),pass);
+        User user = new User(loginRequest.getUsername(),pass, Set.of("ROLE_USER"));
         userRepository.save(user);
     }
 

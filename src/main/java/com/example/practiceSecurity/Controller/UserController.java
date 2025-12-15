@@ -5,18 +5,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
-public class HelloWorldPractice {
+@RequestMapping("/user")
+public class UserController {
+    @GetMapping("/admin1")
+    public String adminFun1(){
 
-    @GetMapping("/hello")
-    public String myMethod(){
-        return "Hello World";
+        return "I am admin 1.";
     }
 
-    @GetMapping("/hello2")
-    public String myMethod2(){
-        return "Hello World 2 !";
-    }
+    @GetMapping("/admin2")
+    public String adminFun2(){
 
+        return "I am admin 2.";
+    }
 
 }
